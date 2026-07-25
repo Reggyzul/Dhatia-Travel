@@ -1,236 +1,124 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
-import { MessageCircle, Ticket } from 'lucide-react';
+import { ShieldCheck, ArrowDown, ChevronDown, MessageCircle, CheckCircle2 } from 'lucide-react';
+import { TRANSLATIONS } from '../utils/translations';
 
 interface HeroProps {
   onRentClick: () => void;
-  lang?: 'ID' | 'EN';
+  onVisiMisiClick?: () => void;
+  lang: 'ID' | 'EN';
 }
 
-export default function Hero({ onRentClick }: HeroProps) {
-  // Booking Form State matching screenshot inputs
-  const [nama, setNama] = useState('');
-  const [asal, setAsal] = useState('');
-  const [tujuan, setTujuan] = useState('');
-  const [penumpang, setPenumpang] = useState('1 Orang');
+export default function Hero({ onRentClick, onVisiMisiClick, lang }: HeroProps) {
+  const t = TRANSLATIONS[lang];
 
-  const handlePesanSekarang = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!nama) {
-      alert('Mohon masukkan Nama Anda!');
-      return;
+  const handleWhatsAppClick = () => {
+    const waNumber = '6281236313554';
+    const text = encodeURIComponent(
+      'Halo Rajawali Trans, saya ingin pesan tiket Travel / Carter rute Kefa - Kupang. Mohon info keberangkatan.'
+    );
+    window.open(`https://api.whatsapp.com/send?phone=${waNumber}&text=${text}`, '_blank', 'noreferrer');
+  };
+
+  const handleScrollToVisiMisi = () => {
+    if (onVisiMisiClick) {
+      onVisiMisiClick();
+    } else {
+      const el = document.getElementById('about');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
-
-    const waNumber = '6285203217673';
-    const message = `FORM BOOKING TICKET
-FARHANA TRAVEL
-🖊️ Nama   : ${nama}
-🗒️ Hari       : 
-📆 Tgl         : 
-⏰ Pukul    : 
-🌞 Jml PNP : ${penumpang}
-📲 HP/WA : 
-📍 Penjemputan : ${asal || 'Jatirogo / Tuban'}
-⛩️ Tujuan : ${tujuan || 'Surabaya / Malang'}
-
-🧳 Barang Bawaan : 
-💰 TARIF : Mulai 150 Ribu-an
-
-Note : PESAN TIKET KE DRIVER DILUAR TANGGUNG JAWAB KAMI`;
-
-    window.open(`https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(message)}`, '_blank', 'noreferrer');
-  };
-
-  const handleDirectPesanWA = () => {
-    const waNumber = '6285203217673';
-    const message = `FORM BOOKING TICKET
-FARHANA TRAVEL
-🖊️ Nama   : 
-🗒️ Hari       : 
-📆 Tgl         : 
-⏰ Pukul    : 
-🌞 Jml PNP : 
-📲 HP/WA : 
-📍 Penjemputan : 
-⛩️ Tujuan : 
-
-🧳 Barang Bawaan : 
-💰 TARIF : Mulai 150 Ribu-an
-
-Note : PESAN TIKET KE DRIVER DILUAR TANGGUNG JAWAB KAMI`;
-
-    window.open(`https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(message)}`, '_blank', 'noreferrer');
-  };
-
-  const handleScrollToRute = () => {
-    const el = document.getElementById('services');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section id="home" className="pt-28 pb-12 sm:pt-32 sm:pb-16 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="home"
+      className="relative pt-28 sm:pt-32 pb-16 bg-gradient-to-b from-slate-50 via-white to-slate-100 text-[#0f172a] overflow-hidden border-b border-slate-200"
+    >
+      {/* Background Decorative Soft Orange Glow */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-orange-400/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-10 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
         
-        {/* Main Hero Card Container */}
-        <div className="relative rounded-[28px] sm:rounded-[36px] overflow-hidden bg-gray-900 shadow-2xl min-h-[520px] flex items-center">
-          
-          {/* Background Image Overlay */}
-          <div className="absolute inset-0 z-0">
-            <img
-              src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=1600"
-              alt="Farhana Travel Road Trip Background"
-              className="w-full h-full object-cover object-center opacity-35"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/50" />
-          </div>
+        <div className="space-y-6 flex flex-col items-center" id="hero-text-container">
 
-          {/* Grid Layout inside Hero Card */}
-          <div className="relative z-10 w-full p-6 sm:p-10 lg:p-14 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            
-            {/* Left Column: Heading & Description matching screenshot */}
-            <div className="lg:col-span-7 space-y-6 text-left text-white">
-              
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="space-y-2"
-              >
-                <h1 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight">
-                  Travel bersama <br />
-                  <span className="text-[#dc2626]">Farhana Travel</span>
-                </h1>
-              </motion.div>
+          {/* Main Headline */}
+          <motion.h1 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="font-display font-black text-4xl sm:text-6xl lg:text-7xl text-[#0f172a] tracking-tight uppercase leading-none"
+          >
+            RAJAWALI <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500">TRANS</span>
+          </motion.h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="font-sans text-gray-300 text-sm sm:text-base leading-relaxed max-w-xl"
-              >
-                Travel bersama Farhana Travel, kami menawarkan perjalanan, travel dan rental mobil bersih & nyaman (mulai 150 ribu-an) di daerah Jawa Timur, terutama pada rute travel Tuban, Juanda, Tanjung Perak, Sidoarjo, Gresik, Lamongan, Surabaya, Malang, dan sekitarnya.
-              </motion.p>
+          {/* Subtitle / Vision summary */}
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="font-sans text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-medium"
+          >
+            Nikmati layanan rental mobil yang aman, nyaman, dan profesional dengan armada berkualitas serta proses pemesanan yang mudah. Kami siap menjadi mitra transportasi terpercaya untuk berbagai kebutuhan perjalanan di Kupang dan wilayah sekitarnya.
+          </motion.p>
 
-              {/* Action Buttons: Pesan & Rute matching screenshot */}
-              <motion.div 
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="flex items-center gap-3 pt-2"
-              >
-                <button
-                  onClick={handleDirectPesanWA}
-                  className="bg-[#dc2626] hover:bg-[#b91c1c] text-white font-sans font-bold text-sm px-7 py-3 rounded-full shadow-lg hover:shadow-red-600/30 transition-all flex items-center gap-2 cursor-pointer"
-                >
-                  <MessageCircle className="w-4.5 h-4.5 fill-current" />
-                  <span>Pesan</span>
-                </button>
-
-                <button
-                  onClick={handleScrollToRute}
-                  className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-sans font-bold text-sm px-7 py-3 rounded-xl transition-all cursor-pointer border border-white/20"
-                >
-                  Rute
-                </button>
-              </motion.div>
-
+          {/* Pricing Highlight Card Bar */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 w-full max-w-2xl shadow-xl shadow-slate-200/50"
+          >
+            <div className="p-3.5 rounded-2xl bg-orange-50/80 border border-orange-100 text-center">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-orange-700 block">Kefa ➔ Kupang</span>
+              <span className="font-display font-black text-base text-[#0f172a] block mt-0.5">Rp 125.000 <span className="text-[11px] font-medium text-slate-500">/org</span></span>
             </div>
-
-            {/* Right Column: Floating White Booking Card matching reference screenshot 1:1 */}
-            <div className="lg:col-span-5 w-full">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.15 }}
-                className="bg-white rounded-3xl p-6 sm:p-7 shadow-2xl text-gray-800 relative overflow-hidden border-b-4 border-[#dc2626]"
-              >
-                {/* Form Header matching screenshot */}
-                <div className="flex items-center gap-2.5 pb-4 mb-4 border-b border-gray-100 text-left">
-                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-700">
-                    <Ticket className="w-4 h-4 text-gray-700" />
-                  </div>
-                  <h3 className="font-display font-bold text-base text-gray-800">
-                    Info Pemesanan
-                  </h3>
-                </div>
-
-                {/* Form Inputs matching screenshot 1:1 */}
-                <form onSubmit={handlePesanSekarang} className="space-y-4 text-left">
-                  
-                  {/* Nama Anda */}
-                  <div className="space-y-1">
-                    <label className="block text-xs font-semibold text-gray-600">
-                      Nama anda
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={nama}
-                      onChange={(e) => setNama(e.target.value)}
-                      className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-[#dc2626] focus:bg-white transition-all font-sans text-gray-800 outline-none"
-                    />
-                  </div>
-
-                  {/* Asal & Tujuan Side by Side */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-1">
-                      <label className="block text-xs font-semibold text-gray-600">
-                        Asal
-                      </label>
-                      <input
-                        type="text"
-                        value={asal}
-                        onChange={(e) => setAsal(e.target.value)}
-                        className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-[#dc2626] focus:bg-white transition-all font-sans text-gray-800 outline-none"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="block text-xs font-semibold text-gray-600">
-                        Tujuan
-                      </label>
-                      <input
-                        type="text"
-                        value={tujuan}
-                        onChange={(e) => setTujuan(e.target.value)}
-                        className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-[#dc2626] focus:bg-white transition-all font-sans text-gray-800 outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Jumlah Penumpang */}
-                  <div className="space-y-1">
-                    <label className="block text-xs font-semibold text-gray-600">
-                      Jumlah Penumpang
-                    </label>
-                    <select
-                      value={penumpang}
-                      onChange={(e) => setPenumpang(e.target.value)}
-                      className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-[#dc2626] focus:bg-white transition-all font-sans text-gray-800 cursor-pointer outline-none"
-                    >
-                      <option value="1 Orang">1 Orang</option>
-                      <option value="2 Orang">2 Orang</option>
-                      <option value="3-4 Orang">3 - 4 Orang</option>
-                      <option value="5-7 Orang (Rombongan)">5 - 7 Orang</option>
-                    </select>
-                  </div>
-
-                  {/* Bright Red Submit Button: Pesan Sekarang */}
-                  <div className="pt-2">
-                    <button
-                      type="submit"
-                      className="w-full bg-[#dc2626] hover:bg-[#b91c1c] text-white font-sans font-bold text-sm py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer text-center"
-                    >
-                      Pesan Sekarang
-                    </button>
-                  </div>
-
-                </form>
-
-              </motion.div>
+            <div className="p-3.5 rounded-2xl bg-orange-50/80 border border-orange-100 text-center">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-orange-700 block">Kupang ➔ Kefa</span>
+              <span className="font-display font-black text-base text-[#0f172a] block mt-0.5">Rp 125.000 <span className="text-[11px] font-medium text-slate-500">/org</span></span>
             </div>
+            <div className="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-100 text-center">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 block">Carter Privat</span>
+              <span className="font-display font-black text-base text-[#0f172a] block mt-0.5">Mulai Rp 600.000</span>
+            </div>
+          </motion.div>
 
-          </div>
+          {/* Action Button */}
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="pt-2"
+          >
+            <button
+              onClick={handleWhatsAppClick}
+              className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-sans font-bold text-xs uppercase px-8 py-4 rounded-2xl shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40 transition-all flex items-center gap-2 cursor-pointer scale-105"
+            >
+              <MessageCircle className="w-5 h-5 fill-current" />
+              <span>Pesan Sekarang</span>
+            </button>
+          </motion.div>
+
+
+
+          {/* Animated Down Arrow Scroll Button to Visi Misi */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, y: [0, 8, 0] }}
+            transition={{ opacity: { delay: 0.4 }, y: { duration: 2, repeat: Infinity, ease: 'easeInOut' } }}
+            className="pt-4"
+          >
+            <button
+              onClick={handleScrollToVisiMisi}
+              className="group flex flex-col items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-orange-600 transition-colors cursor-pointer"
+              title="Lihat Profil & Sejarah"
+            >
+              <span className="text-[10px] uppercase tracking-wider font-extrabold text-orange-600">Profil & Sejarah</span>
+              <div className="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center text-orange-600 group-hover:border-orange-500 group-hover:bg-orange-50 transition-all">
+                <ChevronDown className="w-5 h-5" />
+              </div>
+            </button>
+          </motion.div>
 
         </div>
 

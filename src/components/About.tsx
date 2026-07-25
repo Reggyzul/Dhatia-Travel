@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { UserCheck, Clock, ShieldCheck, Tag, Heart, MapPin, Sparkles, MessageSquare, CheckCircle2 } from 'lucide-react';
+import React from 'react';
+import { motion } from 'motion/react';
+import { ShieldCheck, Sparkles, CheckCircle2, Compass, Award, HeartHandshake, Quote, Eye, Zap, Shield, Target } from 'lucide-react';
 import { TRANSLATIONS } from '../utils/translations';
 
 interface AboutProps {
@@ -8,173 +8,326 @@ interface AboutProps {
 }
 
 export default function About({ lang }: AboutProps) {
-  const [showFullStory, setShowFullStory] = useState(false);
   const t = TRANSLATIONS[lang];
 
-  const keyStrengths = [
-    {
-      icon: <ShieldCheck className="w-6 h-6 text-[#2563eb]" />,
-      title: t.strength_clean_title,
-      description: t.strength_clean_desc
-    },
-    {
-      icon: <Heart className="w-6 h-6 text-rose-500" />,
-      title: t.strength_driver_title,
-      description: t.strength_driver_desc
-    },
-    {
-      icon: <Tag className="w-6 h-6 text-[#2563eb]" />,
-      title: t.strength_price_title,
-      description: t.strength_price_desc
-    },
-    {
-      icon: <Clock className="w-6 h-6 text-amber-500" />,
-      title: t.strength_time_title,
-      description: t.strength_time_desc
-    }
-  ];
-
   return (
-    <section id="about" className="py-20 bg-slate-50/50 overflow-hidden border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          {/* About Left: The Showcase Card */}
-          <div className="lg:col-span-5 relative" id="about-image-card">
-            <div className="relative p-6 bg-slate-900 rounded-[32px] shadow-2xl overflow-hidden text-white group">
-              
-              {/* Card Header */}
-              <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
-                <div>
-                  <p className="text-[10px] font-display font-bold tracking-widest text-blue-400 uppercase">
-                    PROFIL & VISI MISI
-                  </p>
-                  <h3 className="font-display font-extrabold text-lg text-white">FARHANA TRAVEL</h3>
-                </div>
-                <div className="bg-blue-600/30 border border-blue-400/30 text-blue-300 text-[10px] font-bold px-3 py-1 rounded-full">
-                  Jatirogo - Tuban
-                </div>
-              </div>
+    <section id="about" className="py-20 sm:py-24 bg-gradient-to-b from-white via-slate-50 to-white text-[#0f172a] overflow-hidden relative border-b border-slate-200">
+      
+      {/* Background Subtle Soft Radial Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-400/5 rounded-full blur-3xl pointer-events-none" />
 
-              {/* Ertiga image showcase inside frame */}
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-lg mb-6 bg-slate-800/80 border border-white/10 flex items-center justify-center p-2">
-                <img
-                  src="/ertiga.png"
-                  alt="Suzuki Ertiga Farhana Travel Tuban"
-                  className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute top-3 left-3 bg-[#25D366] text-white font-display font-bold text-[10px] px-2.5 py-1 rounded-full shadow flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" />
-                  <span>Sewa Mulai 150 Ribu-an</span>
-                </div>
-              </div>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-14">
+        
+        {/* Section Heading Header */}
+        <div className="text-center max-w-3xl mx-auto space-y-1" id="about-heading">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="font-['Great_Vibes'] text-4xl sm:text-5xl text-orange-500 font-normal block leading-tight">
+              About Our Company
+            </span>
+          </motion.div>
 
-              {/* Visi Misi Quote Box */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-md">
-                <div className="flex items-center gap-2 text-rose-400 font-display font-bold text-xs mb-1">
-                  <Heart className="w-4 h-4 fill-current" />
-                  <span>VISI & MISI UTAMA</span>
-                </div>
-                <p className="font-display font-extrabold text-lg text-white italic leading-snug">
-                  "Menemani Perjalanan Anda Sepenuh Hati"
-                </p>
-                <p className="text-xs text-slate-300 mt-2 font-sans leading-relaxed">
-                  Ds. Kebonharjo RT 01 RW 04, Kec. Jatirogo, Kab. Tuban
-                </p>
-              </div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="font-display font-black text-3xl sm:text-4xl text-[#0f172a] tracking-tight uppercase leading-tight"
+          >
+            Profil, Sejarah & <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500">Visi Misi</span>
+          </motion.h2>
 
-            </div>
-          </div>
-
-          {/* About Right: The Story */}
-          <div className="lg:col-span-7 space-y-6 flex flex-col justify-center" id="about-content">
-            
-            <div className="space-y-2">
-              <span className="font-display font-extrabold text-xs text-[#2563eb] tracking-widest uppercase">
-                {t.about_tag}
-              </span>
-              <h2 className="font-display font-black text-3xl sm:text-4xl text-gray-900 tracking-tight leading-tight uppercase">
-                {t.about_title_1} <br />
-                <span className="text-[#2563eb]">{t.about_title_2}</span>
-              </h2>
-            </div>
-
-            <div className="space-y-4 font-sans text-gray-600 leading-relaxed text-sm sm:text-base">
-              <p>
-                {t.about_desc_1}
-              </p>
-              <p>
-                {t.about_desc_2}
-              </p>
-            </div>
-
-            {/* Core Values Bullet Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white border border-gray-100 shadow-sm">
-                <CheckCircle2 className="w-5 h-5 text-[#2563eb] shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-display font-bold text-xs text-gray-900">Armada Suzuki Ertiga Utama</h4>
-                  <p className="text-[11px] text-gray-500 leading-normal">Bersih, AC dingin, dan siap perjalanan jauh.</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white border border-gray-100 shadow-sm">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-display font-bold text-xs text-gray-900">Tarif Transparan & Hemat</h4>
-                  <p className="text-[11px] text-gray-500 leading-normal">Mulai 150 Ribu-an tanpa biaya terselubung.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Read More Accordion showing strengths details */}
-            <AnimatePresence>
-              {showFullStory && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="space-y-4 pt-4 border-t border-gray-200"
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                    {keyStrengths.map((strength, idx) => (
-                      <div key={idx} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
-                        <div className="mb-2">{strength.icon}</div>
-                        <h4 className="font-display font-bold text-sm text-gray-900 mb-1">{strength.title}</h4>
-                        <p className="font-sans text-xs text-gray-500 leading-relaxed">{strength.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Buttons Row */}
-            <div className="flex items-center gap-4 pt-2">
-              <button
-                onClick={() => setShowFullStory(!showFullStory)}
-                className="bg-[#2563eb] hover:bg-blue-700 text-white font-display font-extrabold text-xs uppercase px-6 py-3.5 rounded-xl shadow-md transition-colors cursor-pointer"
-                id="about-readmore-btn"
-              >
-                {showFullStory ? t.about_read_less : t.about_read_more}
-              </button>
-              
-              <button
-                onClick={() => {
-                  const target = document.getElementById('contact');
-                  if (target) target.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="border border-gray-300 hover:bg-gray-100 text-gray-700 p-3 rounded-xl transition-all cursor-pointer flex items-center gap-2 text-xs font-bold"
-                id="about-contact-icon-btn"
-              >
-                <MapPin className="w-4 h-4 text-[#2563eb]" />
-                <span>Lihat Alamat Jatirogo</span>
-              </button>
-            </div>
-
-          </div>
-
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="font-sans text-slate-600 text-sm sm:text-base leading-relaxed font-medium max-w-2xl mx-auto pt-1"
+          >
+            Mengenal lebih dekat dedikasi, rekam jejak perjalanan, serta visi misi utama Rajawali Trans sebagai penyedia transportasi terpercaya di TTU, NTT.
+          </motion.p>
         </div>
+
+        {/* 1. PROFIL & SEJARAH PERUSAHAAN (PALING ATAS - DENGAN FOTO EMPOS TEFA KETUA DI SEBELAH KIRI) */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden space-y-8"
+        >
+          {/* Subtitle in Cursive Script & Main Heading */}
+          <div className="border-b border-slate-100 pb-5 text-left">
+            <span className="font-['Great_Vibes'] text-3xl sm:text-4xl text-orange-500 font-normal block leading-tight">
+              Profil & Sejarah
+            </span>
+            <h3 className="font-display font-black text-2xl sm:text-3xl text-[#0f172a] uppercase tracking-tight">
+              Perjalanan Dedikasi <span className="text-orange-600">Rajawali Trans</span>
+            </h3>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">
+              Dari Rental Kasih Menuju Layanan Transportasi Profesional di TTU
+            </p>
+          </div>
+
+          {/* 2-COLUMN GRID: LEFT = EMPOS TEFA KETUA PHOTO, RIGHT = NARRATIVE PARAGRAPHS */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            {/* LEFT COLUMN: EMPOS TEFA KETUA PORTRAIT CARD */}
+            <div className="lg:col-span-4 flex flex-col items-center">
+              <div className="relative w-full max-w-xs group">
+                {/* Glow & Border Accent Frame */}
+                <div className="absolute inset-0 bg-gradient-to-b from-orange-500/20 to-amber-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300 pointer-events-none" />
+                
+                <div className="relative rounded-3xl overflow-hidden border-2 border-orange-200 shadow-2xl bg-slate-900 group-hover:border-orange-400 transition-all duration-300">
+                  <img
+                    src="/diego_founder.jpg"
+                    alt="Empos Tefa - Ketua Rajawali Trans"
+                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  
+                  {/* Bottom Profile Badge Overlay */}
+                  <div className="bg-gradient-to-t from-slate-950 via-slate-900/90 to-transparent p-4 pt-8 text-center text-white space-y-1">
+                    <span className="bg-orange-500 text-white font-display font-extrabold text-[10px] uppercase tracking-widest px-3 py-0.5 rounded-full inline-block shadow-md">
+                      KETUA RAJAWALI TRANS
+                    </span>
+                    <h4 className="font-display font-black text-xl text-white tracking-tight uppercase pt-1">
+                      EMPOS TEFA
+                    </h4>
+                    <p className="font-sans text-[11px] text-slate-300 font-medium leading-snug">
+                      Ketua Rajawali Trans
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Persuasive Founder Quote */}
+              <div className="mt-4 p-3.5 rounded-2xl bg-orange-50/80 border border-orange-200/80 text-center max-w-xs">
+                <p className="font-sans text-xs text-slate-700 italic font-semibold leading-relaxed">
+                  "Membangun layanan transportasi dari hati, dedikasi, dan menjaga kepercayaan masyarakat TTU."
+                </p>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN: PARAGRAPHS WITH CHECKMARKS */}
+            <div className="lg:col-span-8 space-y-5 text-left">
+              
+              {/* Paragraph 1 */}
+              <div className="flex items-start gap-3">
+                <span className="text-orange-500 font-extrabold text-lg mt-0.5 shrink-0">✓</span>
+                <p className="font-sans text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
+                  <strong className="text-[#0f172a] font-bold">Rajawali Trans</strong> merupakan perusahaan jasa transportasi yang lahir dari semangat kebersamaan dan komitmen untuk menghadirkan layanan transportasi yang aman, nyaman, dan terpercaya bagi masyarakat Kabupaten Timor Tengah Utara (TTU).
+                </p>
+              </div>
+
+              {/* Paragraph 2 */}
+              <div className="flex items-start gap-3">
+                <span className="text-orange-500 font-extrabold text-lg mt-0.5 shrink-0">✓</span>
+                <p className="font-sans text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
+                  Perjalanan kami bermula dari <strong className="text-[#0f172a] font-bold">Rental Kasih</strong>, sebuah usaha yang menjadi fondasi dalam membangun pengalaman, kepercayaan pelanggan, serta pemahaman akan kebutuhan transportasi masyarakat. Seiring waktu, melalui berbagai tantangan dan proses pembelajaran selama bertahun-tahun, lahirlah identitas baru sebagai <strong className="text-orange-600 font-bold">Rajawali Trans</strong> dengan komitmen untuk memberikan pelayanan yang lebih profesional dan berkualitas.
+                </p>
+              </div>
+
+              {/* Paragraph 3 */}
+              <div className="flex items-start gap-3">
+                <span className="text-orange-500 font-extrabold text-lg mt-0.5 shrink-0">✓</span>
+                <p className="font-sans text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
+                  Nama <strong className="text-orange-600 font-bold">Rajawali</strong> dipilih sebagai simbol keberanian, ketangguhan, ketepatan, dan visi yang jauh ke depan. Nilai-nilai tersebut menjadi dasar dalam setiap langkah kami untuk terus berkembang, menjaga kepercayaan pelanggan, dan memberikan pelayanan terbaik dalam setiap perjalanan.
+                </p>
+              </div>
+
+              {/* Paragraph 4 */}
+              <div className="flex items-start gap-3">
+                <span className="text-orange-500 font-extrabold text-lg mt-0.5 shrink-0">✓</span>
+                <p className="font-sans text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
+                  Hingga saat ini, <strong className="text-[#0f172a] font-bold">Rajawali Trans</strong> terus berkomitmen menjadi mitra transportasi yang mengutamakan keselamatan, kenyamanan, dan kepuasan pelanggan, serta memberikan kontribusi positif bagi kemajuan masyarakat Timor Tengah Utara.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* Quick Summary Highlights */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+            <div className="p-4 rounded-2xl bg-orange-50/60 border border-orange-100 flex items-start gap-3 text-left">
+              <Award className="w-5 h-5 text-orange-600 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-display font-bold text-xs uppercase text-[#0f172a] block">Pengalaman Teruji</span>
+                <span className="text-[11px] text-slate-600 font-medium block mt-0.5">Bermula dari awal usaha Rental Kasih</span>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3 text-left">
+              <Zap className="w-5 h-5 text-orange-600 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-display font-bold text-xs uppercase text-[#0f172a] block">Ketangguhan Rajawali</span>
+                <span className="text-[11px] text-slate-600 font-medium block mt-0.5">Ketepatan & kualitas prima di rute Timor</span>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3 text-left">
+              <HeartHandshake className="w-5 h-5 text-orange-600 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-display font-bold text-xs uppercase text-[#0f172a] block">Mitra Masyarakat TTU</span>
+                <span className="text-[11px] text-slate-600 font-medium block mt-0.5">Mengutamakan keamanan & kenyamanan</span>
+              </div>
+            </div>
+          </div>
+
+        </motion.div>
+
+        {/* 2. VISI & MISI PERUSAHAAN (DILANJUTKAN DI BAWAHNYA) */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden space-y-8 text-left"
+        >
+          {/* Subtitle in Cursive Script & Main Heading */}
+          <div className="border-b border-slate-100 pb-5">
+            <span className="font-['Great_Vibes'] text-3xl sm:text-4xl text-orange-500 font-normal block leading-tight">
+              Vision & Mission
+            </span>
+            <h3 className="font-display font-black text-2xl sm:text-3xl text-[#0f172a] uppercase tracking-tight">
+              Visi & Misi <span className="text-orange-600">Rajawali Trans</span>
+            </h3>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">
+              Prinsip Operasional Utama & Standar Mutu Pelayanan
+            </p>
+          </div>
+
+          {/* VISI BOX */}
+          <div className="space-y-3">
+            <h4 className="font-display font-extrabold text-base sm:text-lg text-[#0f172a] uppercase tracking-tight flex items-center gap-2">
+              <Target className="w-5 h-5 text-orange-600" />
+              <span>VISI PERUSAHAAN</span>
+            </h4>
+            <div className="bg-gradient-to-br from-orange-50/70 via-slate-50 to-white border-l-4 border-orange-500 p-5 sm:p-6 rounded-r-2xl border-y border-r border-slate-200/80 shadow-xs">
+              <p className="font-sans text-sm sm:text-base text-slate-800 leading-relaxed font-medium">
+                "Menjadi perusahaan jasa transportasi perjalanan terdepan dan unggulan di Nusa Tenggara Timur (NTT) yang tepercaya, aman, dan berorientasi pada kepuasan penuh pelanggan melalui penyediaan armada berkualitas tinggi serta pelayanan yang berstandar profesional."
+              </p>
+            </div>
+          </div>
+
+          {/* MISI LIST */}
+          <div className="space-y-4 pt-2">
+            <h4 className="font-display font-extrabold text-base sm:text-lg text-[#0f172a] uppercase tracking-tight flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-orange-600" />
+              <span>MISI UTAMA KAMI</span>
+            </h4>
+
+            <div className="space-y-3">
+              
+              <div className="flex items-start gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-orange-200 transition-colors">
+                <span className="text-orange-500 font-extrabold text-lg mt-0.5 shrink-0">✓</span>
+                <div>
+                  <strong className="font-display font-bold text-sm text-[#0f172a] uppercase tracking-wide block">
+                    1. Keselamatan & Keamanan Utama
+                  </strong>
+                  <p className="font-sans text-xs sm:text-sm text-slate-600 leading-relaxed font-medium mt-1">
+                    Menyediakan armada kendaraan (Avanza, Rush, XL7, Wuling, Calya & Sigra) yang selalu bersih, terawat, steril, rutin diservis, dan beroperasi dalam kondisi prima demi keselamatan penumpang.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-orange-200 transition-colors">
+                <span className="text-orange-500 font-extrabold text-lg mt-0.5 shrink-0">✓</span>
+                <div>
+                  <strong className="font-display font-bold text-sm text-[#0f172a] uppercase tracking-wide block">
+                    2. Pelayanan Berkualitas & Profesional
+                  </strong>
+                  <p className="font-sans text-xs sm:text-sm text-slate-600 leading-relaxed font-medium mt-1">
+                    Memastikan seluruh driver dan tim pengemudi bertindak ramah, sopan, berpengalaman, jujur, serta tepat waktu di setiap penjemputan dan rute perjalanan Kefa - Kupang PP.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-orange-200 transition-colors">
+                <span className="text-orange-500 font-extrabold text-lg mt-0.5 shrink-0">✓</span>
+                <div>
+                  <strong className="font-display font-bold text-sm text-[#0f172a] uppercase tracking-wide block">
+                    3. Kenyamanan Maksimal & Kepuasan Pelanggan
+                  </strong>
+                  <p className="font-sans text-xs sm:text-sm text-slate-600 leading-relaxed font-medium mt-1">
+                    Menghadirkan kabin yang nyaman, fasilitas AC yang sejuk, serta suasana perjalanan yang menyenangkan bagi setiap penumpang reguler maupun carter privat rombongan.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-orange-200 transition-colors">
+                <span className="text-orange-500 font-extrabold text-lg mt-0.5 shrink-0">✓</span>
+                <div>
+                  <strong className="font-display font-bold text-sm text-[#0f172a] uppercase tracking-wide block">
+                    4. Transparansi & Kepercayaan Jangka Panjang
+                  </strong>
+                  <p className="font-sans text-xs sm:text-sm text-slate-600 leading-relaxed font-medium mt-1">
+                    Memberikan penawaran harga yang transparan dan jujur (Travel PP Rp 125.000 / Carter Rp 650.000) tanpa biaya tersembunyi demi menjaga kepercayaan masyarakat TTU.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </motion.div>
+
+        {/* 3. FILOSOFI RAJAWALI (SECTION BAWAH) */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 text-white rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden text-left space-y-6"
+        >
+          <div>
+            <span className="font-['Great_Vibes'] text-3xl sm:text-4xl text-orange-400 font-normal block leading-tight">
+              Philosophy & Values
+            </span>
+            <h3 className="font-display font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
+              Filosofi Dibalik Nama <span className="text-orange-500">Rajawali</span>
+            </h3>
+            <p className="text-xs text-slate-400 font-medium mt-1">
+              Makna ketangguhan, penglihatan tajam, dan kepakan sayap perlindungan
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            
+            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center shadow-md">
+                <Zap className="w-5 h-5 fill-current" />
+              </div>
+              <h4 className="font-display font-bold text-sm text-white uppercase">1. Ketangguhan Presisi</h4>
+              <p className="font-sans text-xs text-slate-300 leading-relaxed">
+                Ketahanan armada dan keandalan driver kami dalam menembus rute darat Timor dengan cepat, aman, dan tepat waktu.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center border border-white/20 shadow-md">
+                <Shield className="w-5 h-5 text-orange-400" />
+              </div>
+              <h4 className="font-display font-bold text-sm text-white uppercase">2. Perlindungan Kabin</h4>
+              <p className="font-sans text-xs text-slate-300 leading-relaxed">
+                Bagaikan kepakan sayap Rajawali yang melingkungi, kami memberikan rasa aman dan kenyamanan maksimal bagi penumpang.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center shadow-md">
+                <Eye className="w-5 h-5" />
+              </div>
+              <h4 className="font-display font-bold text-sm text-white uppercase">3. Komitmen Kejujuran</h4>
+              <p className="font-sans text-xs text-slate-300 leading-relaxed">
+                Ketelitian standar operasional, ketepatan waktu penjemputan, serta kejujuran dalam pelayanan tanpa biaya tersembunyi.
+              </p>
+            </div>
+
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );

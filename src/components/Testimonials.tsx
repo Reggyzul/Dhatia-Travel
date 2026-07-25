@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TESTIMONIALS } from '../data/cars';
 import { Testimonial } from '../types';
-import { Star, Quote, MessageSquarePlus, Check, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { Star, Quote, Sparkles, CheckCircle2, MessageSquare } from 'lucide-react';
+import { motion } from 'motion/react';
 import { TRANSLATIONS } from '../utils/translations';
 
 interface TestimonialsProps {
@@ -10,316 +10,102 @@ interface TestimonialsProps {
 }
 
 export default function Testimonials({ lang }: TestimonialsProps) {
-  const [reviews, setReviews] = useState<Testimonial[]>(TESTIMONIALS);
-  const [showAddReview, setShowAddReview] = useState(false);
-  const [activeIdx, setActiveIdx] = useState(0);
+  const [reviews] = useState<Testimonial[]>(TESTIMONIALS);
   const t = TRANSLATIONS[lang];
 
-  const handlePrev = () => {
-    setActiveIdx((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setActiveIdx((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
-  };
-
-  // Form states
-  const [newName, setNewName] = useState('');
-  const [newRole, setNewRole] = useState('');
-  const [newText, setNewText] = useState('');
-  const [newRating, setNewRating] = useState(5);
-  const [newCarModel, setNewCarModel] = useState('Suzuki Ertiga');
-  const [successMsg, setSuccessMsg] = useState(false);
-
-  useEffect(() => {
-    if (showAddReview) return;
-    const interval = setInterval(() => {
-      setActiveIdx((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [reviews.length, showAddReview]);
-
-  useEffect(() => {
-    const local = localStorage.getItem('farhana_reviews');
-    if (local) {
-      try {
-        setReviews(JSON.parse(local));
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  }, []);
-
-  const handleAddReviewSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newName || !newText) {
-      alert('Mohon tuliskan nama dan isi ulasan Anda!');
-      return;
-    }
-
-    const newReview: Testimonial = {
-      id: `local-testi-${Date.now()}`,
-      name: newName,
-      role: newRole || 'Pelanggan Setia',
-      text: newText,
-      rating: newRating,
-      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150',
-      carModel: newCarModel,
-      date: 'Hari Ini'
-    };
-
-    const updatedReviews = [newReview, ...reviews];
-    setReviews(updatedReviews);
-    localStorage.setItem('farhana_reviews', JSON.stringify(updatedReviews));
-
-    setNewName('');
-    setNewRole('');
-    setNewText('');
-    setSuccessMsg(true);
-    setTimeout(() => {
-      setSuccessMsg(false);
-      setShowAddReview(false);
-    }, 2500);
-  };
-
   return (
-    <section id="testimonials" className="py-20 bg-gray-50 overflow-hidden border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="testimonials" className="py-20 sm:py-24 bg-[#f8fafc] text-[#0f172a] overflow-hidden relative border-b border-slate-200">
+      
+      {/* Background Decorative Soft Radial Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-400/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3" id="testimonials-heading">
-          <span className="font-display font-extrabold text-xs text-[#2563eb] tracking-widest uppercase">
-            {t.testi_tag}
-          </span>
-          <h2 className="font-display font-black text-3xl sm:text-4xl text-gray-900 tracking-tight uppercase">
-            {t.testi_title}
+        {/* Section Heading Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3" id="testimonials-heading">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-600 font-display font-extrabold text-xs tracking-wider uppercase shadow-sm">
+            <MessageSquare className="w-4 h-4 text-orange-600" />
+            <span>ULASAN & TESTIMONI PENUMPANG</span>
+          </div>
+
+          <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-[#0f172a] tracking-tight uppercase leading-tight">
+            Pengalaman <span className="text-orange-600">Penumpang Kami</span>
           </h2>
-          <p className="font-sans text-gray-600 text-sm sm:text-base leading-relaxed">
-            {t.testi_desc}
+
+          <p className="font-sans text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
+            Kepercayaan dan kepuasan Anda adalah kebanggaan utama kami dalam setiap perjalanan rute Timor.
           </p>
         </div>
 
-        {/* Carousel Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          
-          {/* Left Column */}
-          <div className="lg:col-span-7 flex flex-col justify-center relative" id="testimonials-carousel-section">
-            
-            <AnimatePresence mode="wait">
-              {reviews.length > 0 && (
-                <motion.div
-                  key={activeIdx}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.4 }}
-                  className="bg-white rounded-[32px] p-8 sm:p-10 border border-blue-100 shadow-lg relative"
-                  id={`testimonial-bubble-${activeIdx}`}
-                >
-                  <div className="absolute top-6 right-6 text-blue-100">
-                    <Quote className="w-14 h-14 transform -scale-x-100 fill-current opacity-60" />
+        {/* ULTRA-PROFESSIONAL PRECISE 3-COLUMN TESTIMONIAL GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {reviews.map((testi, index) => (
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              key={testi.id}
+              className="bg-white border border-slate-200/90 rounded-3xl p-7 shadow-lg hover:shadow-2xl hover:border-orange-300 transition-all duration-300 flex flex-col justify-between relative overflow-hidden group"
+            >
+              {/* Decorative Subtle Quote Icon in Background */}
+              <Quote className="absolute top-6 right-6 w-12 h-12 text-slate-100 fill-current opacity-80 group-hover:text-orange-100 transition-colors pointer-events-none" />
+
+              <div className="space-y-5 relative z-10 text-left">
+                
+                {/* 5-Star Rating Row & Verified Badge */}
+                <div className="flex items-center justify-between">
+                  <div className="flex text-amber-400 gap-0.5">
+                    {[...Array(testi.rating || 5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-current" />
+                    ))}
                   </div>
 
-                  <div className="space-y-5 relative z-10 text-left">
-                    <div className="flex text-amber-400">
-                      {[...Array(reviews[activeIdx].rating)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-current" />
-                      ))}
-                    </div>
+                  <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                    <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0" />
+                    <span>Verified</span>
+                  </span>
+                </div>
 
-                    <p className="font-sans text-gray-700 italic text-base sm:text-lg leading-relaxed">
-                      "{reviews[activeIdx].text}"
-                    </p>
+                {/* Testimonial Quote Text */}
+                <p className="font-sans text-slate-700 italic text-sm leading-relaxed font-medium">
+                  "{testi.text}"
+                </p>
 
-                    <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
-                      <img
-                        src={reviews[activeIdx].image}
-                        alt={reviews[activeIdx].name}
-                        className="w-12 h-12 rounded-full object-cover border-2 border-[#2563eb]"
-                      />
-                      <div>
-                        <h4 className="font-display font-extrabold text-base text-gray-900 tracking-wide">
-                          {reviews[activeIdx].name}
-                        </h4>
-                        <p className="font-sans text-xs text-gray-500">
-                          {reviews[activeIdx].role}
-                        </p>
-                        
-                        <span className="inline-flex items-center gap-1 bg-blue-50 text-[#2563eb] text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-blue-100 mt-1">
-                          <Sparkles className="w-2.5 h-2.5" />
-                          <span>{reviews[activeIdx].carModel} ({reviews[activeIdx].date})</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <div className="flex items-center justify-between gap-4 mt-6" id="carousel-controls">
-              <button
-                onClick={handlePrev}
-                className="flex items-center gap-1 bg-white hover:bg-[#2563eb] hover:text-white text-gray-700 font-display font-bold text-xs py-2.5 px-4 rounded-xl border border-gray-200 shadow-sm transition-all cursor-pointer"
-              >
-                <ChevronLeft className="w-4 h-4" />
-                <span>Sebelumnya</span>
-              </button>
-
-              <div className="flex items-center gap-2">
-                {reviews.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveIdx(i)}
-                    className={`h-2.5 rounded-full transition-all cursor-pointer ${
-                      activeIdx === i ? 'w-8 bg-[#2563eb]' : 'w-2.5 bg-gray-300 hover:bg-gray-400'
-                    }`}
-                  />
-                ))}
               </div>
 
-              <button
-                onClick={handleNext}
-                className="flex items-center gap-1 bg-white hover:bg-[#2563eb] hover:text-white text-gray-700 font-display font-bold text-xs py-2.5 px-4 rounded-xl border border-gray-200 shadow-sm transition-all cursor-pointer"
-              >
-                <span>Selanjutnya</span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
+              {/* Renter Profile Header Footer */}
+              <div className="pt-5 mt-5 border-t border-slate-100 flex items-center gap-3.5 relative z-10 text-left">
+                <img
+                  src={testi.image || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200'}
+                  alt={testi.name}
+                  className="w-12 h-12 rounded-full object-cover border-2 border-orange-500 shadow-md shrink-0"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200';
+                  }}
+                />
+                <div>
+                  <h4 className="font-display font-bold text-sm text-[#0f172a] uppercase tracking-tight">
+                    {testi.name}
+                  </h4>
+                  <p className="font-sans text-[11px] text-slate-500 font-medium">
+                    {testi.role}
+                  </p>
+                  
+                  {/* Car Model Badge */}
+                  {testi.carModel && (
+                    <span className="inline-flex items-center gap-1 bg-orange-50 text-orange-700 text-[9px] font-bold px-2 py-0.5 rounded-full border border-orange-200 mt-1">
+                      <Sparkles className="w-2.5 h-2.5 text-orange-600" />
+                      <span>{testi.carModel}</span>
+                    </span>
+                  )}
+                </div>
+              </div>
 
-          </div>
-
-          {/* Right Column: Write Review Form */}
-          <div className="lg:col-span-5" id="testimonials-form-section">
-            <div className="bg-slate-900 text-white rounded-[32px] p-7 border border-slate-800 shadow-xl relative overflow-hidden">
-              
-              <AnimatePresence mode="wait">
-                {!showAddReview ? (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="space-y-4 relative z-10 py-4 text-left"
-                  >
-                    <Quote className="w-9 h-9 text-[#2563eb]" />
-                    <h3 className="font-display font-black text-xl uppercase tracking-tight text-white">
-                      Punya Pengalaman Bersama Farhana Travel?
-                    </h3>
-                    <p className="font-sans text-xs text-slate-400 leading-relaxed">
-                      Ulasan dan saran Anda sangat berharga bagi peningkatan pelayanan kami sepenuh hati.
-                    </p>
-                    <button
-                      onClick={() => setShowAddReview(true)}
-                      className="bg-[#2563eb] hover:bg-blue-700 text-white font-display font-extrabold text-xs uppercase py-3.5 px-6 rounded-xl shadow-md transition-colors flex items-center gap-2 justify-center w-full cursor-pointer"
-                    >
-                      <MessageSquarePlus className="w-4 h-4" />
-                      <span>Tulis Ulasan Anda</span>
-                    </button>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="space-y-4 relative z-10"
-                  >
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-display font-extrabold text-xs uppercase text-blue-400 tracking-wider">
-                        Formulir Ulasan Pelanggan
-                      </h3>
-                      <button
-                        onClick={() => setShowAddReview(false)}
-                        className="text-slate-400 hover:text-white text-xs font-semibold cursor-pointer"
-                      >
-                        Batal
-                      </button>
-                    </div>
-
-                    {successMsg ? (
-                      <div className="bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 rounded-xl p-4 flex items-center gap-2 text-xs">
-                        <Check className="w-5 h-5 text-emerald-400 shrink-0" />
-                        <span>Terima kasih! Ulasan Anda telah tersimpan.</span>
-                      </div>
-                    ) : (
-                      <form onSubmit={handleAddReviewSubmit} className="space-y-3 text-left">
-                        <div className="space-y-1">
-                          <label className="block text-[10px] font-bold text-slate-300 uppercase">
-                            Nama Lengkap *
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            value={newName}
-                            onChange={(e) => setNewName(e.target.value)}
-                            placeholder="Contoh: Rian Prasetya"
-                            className="block w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:ring-1 focus:ring-[#2563eb] text-xs font-sans"
-                          />
-                        </div>
-
-                        <div className="space-y-1">
-                          <label className="block text-[10px] font-bold text-slate-300 uppercase">
-                            Alamat / Asal
-                          </label>
-                          <input
-                            type="text"
-                            value={newRole}
-                            onChange={(e) => setNewRole(e.target.value)}
-                            placeholder="Contoh: Pelanggan dari Jatirogo Tuban"
-                            className="block w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:ring-1 focus:ring-[#2563eb] text-xs font-sans"
-                          />
-                        </div>
-
-                        <div className="space-y-1">
-                          <label className="block text-[10px] font-bold text-slate-300 uppercase">
-                            Rating Kepuasan
-                          </label>
-                          <div className="flex gap-1 text-amber-400">
-                            {[1, 2, 3, 4, 5].map((stars) => (
-                              <button
-                                key={stars}
-                                type="button"
-                                onClick={() => setNewRating(stars)}
-                                className="p-1 cursor-pointer"
-                              >
-                                <Star 
-                                  className={`w-5 h-5 ${
-                                    stars <= newRating ? 'fill-current text-amber-400' : 'text-slate-600'
-                                  }`} 
-                                />
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div className="space-y-1">
-                          <label className="block text-[10px] font-bold text-slate-300 uppercase">
-                            Pesan Ulasan *
-                          </label>
-                          <textarea
-                            rows={3}
-                            required
-                            value={newText}
-                            onChange={(e) => setNewText(e.target.value)}
-                            placeholder="Tuliskan pengalaman Anda bersama Farhana Travel..."
-                            className="block w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:ring-1 focus:ring-[#2563eb] text-xs font-sans"
-                          />
-                        </div>
-
-                        <button
-                          type="submit"
-                          className="w-full bg-[#2563eb] hover:bg-blue-700 text-white font-display font-extrabold text-xs uppercase py-3 rounded-xl transition-colors cursor-pointer"
-                        >
-                          Kirim Ulasan
-                        </button>
-                      </form>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-            </div>
-          </div>
-
+            </motion.div>
+          ))}
         </div>
+
       </div>
     </section>
   );

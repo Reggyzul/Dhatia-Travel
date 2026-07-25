@@ -2,150 +2,124 @@ import React from 'react';
 import { CARS } from '../data/cars';
 import { Car } from '../types';
 import { motion } from 'motion/react';
-import { Users, Fuel, ShieldCheck, CheckCircle2, MessageCircle } from 'lucide-react';
+import { Users, CheckCircle2, ShieldCheck, MessageCircle, Sparkles, Fuel } from 'lucide-react';
+import { TRANSLATIONS } from '../utils/translations';
 
 interface CarListProps {
   onSelectCar: (car: Car) => void;
+  lang: 'ID' | 'EN';
 }
 
-export default function CarList({ onSelectCar }: CarListProps) {
+export default function CarList({ onSelectCar, lang }: CarListProps) {
+  const t = TRANSLATIONS[lang];
 
-  const handleWhatsAppDirect = (carName: string) => {
-    const waNumber = '6285203217673';
-    const message = `FORM BOOKING TICKET
-FARHANA TRAVEL
-🖊️ Nama   : 
-🗒️ Hari       : 
-📆 Tgl         : 
-⏰ Pukul    : 
-🌞 Jml PNP : 
-📲 HP/WA : 
-📍 Penjemputan : 
-⛩️ Tujuan : 
-
-🧳 Barang Bawaan : 
-💰 TARIF : Mulai 150 Ribu-an (${carName})
-
-Note : PESAN TIKET KE DRIVER DILUAR TANGGUNG JAWAB KAMI`;
+  const handleWhatsAppBooking = (carName: string) => {
+    const waNumber = '6281236313554';
+    const message = `Halo Rajawali Trans, saya berminat memesan/carter unit ${carName} untuk rute Kefa - Kupang. Mohon info ketersediaan jam & tanggal. Terima kasih!`;
     window.open(`https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(message)}`, '_blank', 'noreferrer');
   };
 
   return (
-    <section id="cars" className="py-16 bg-white overflow-hidden border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="cars" className="py-20 bg-slate-50 text-[#0f172a] overflow-hidden relative border-b border-slate-200">
+      
+      {/* Background Subtle Soft Glow */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-orange-400/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-2" id="cars-heading">
-          <span className="font-sans font-bold text-xs text-[#dc2626] uppercase tracking-wider">
-            ARMADA UNGGULAN
-          </span>
-          <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-gray-900 tracking-tight">
-            Suzuki Ertiga – Mulai 150 Ribu-an
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3" id="cars-heading">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-600 font-display font-extrabold text-xs tracking-wider uppercase shadow-sm">
+            <Sparkles className="w-4 h-4 text-orange-600" />
+            <span>KATALOG ARMADA LENGKAP</span>
+          </div>
+
+          <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-[#0f172a] tracking-tight uppercase leading-tight">
+            Armada <span className="text-orange-600">Rajawali Trans</span>
           </h2>
-          <p className="font-sans text-gray-600 text-sm leading-relaxed">
-            Pilihan armada terbaik keluarga, bersih, harum, dingin, dan sangat irit untuk perjalanan Anda.
+
+          <p className="font-sans text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
+            Seluruh kendaraan selalu bersih, terawat, dan ber-AC prima. Pilih armada favorit Anda untuk perjalanan Kefa - Kupang PP atau carter privat.
           </p>
         </div>
 
-        {/* Featured Car Card */}
-        <div className="max-w-4xl mx-auto">
-          {CARS.map((car) => (
+        {/* GRID LAYOUT: BERJEJER 6 MOBIL */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {CARS.map((car, index) => (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
               key={car.id}
-              className="bg-slate-50 rounded-3xl border border-gray-200 shadow-md overflow-hidden grid grid-cols-1 lg:grid-cols-12"
+              className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-md hover:shadow-2xl hover:border-orange-300 transition-all duration-300 flex flex-col justify-between group overflow-hidden"
               id={`car-card-${car.id}`}
             >
-              {/* Car Image Column */}
-              <div className="lg:col-span-6 bg-white p-8 flex flex-col items-center justify-center relative border-b lg:border-b-0 lg:border-r border-gray-200">
-                <div className="absolute top-4 left-4 bg-[#dc2626] text-white font-sans font-bold text-xs px-3.5 py-1.5 rounded-full shadow">
-                  MULAI 150 RIBU-AN
-                </div>
+              <div className="space-y-5 text-left">
                 
-                <img
-                  src={car.image}
-                  alt={car.name}
-                  className="w-full h-auto object-contain max-h-[260px] hover:scale-105 transition-transform duration-500 py-4"
-                />
-
-                <div className="w-full flex items-center justify-center gap-4 text-xs font-semibold text-gray-600 pt-2 border-t border-gray-100">
-                  <div className="flex items-center gap-1">
-                    <Users className="w-4 h-4 text-[#dc2626]" />
-                    <span>7 Kursi</span>
+                {/* Image Showcase with Category Badge Overlay */}
+                <div className="relative rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 aspect-[16/10] flex items-center justify-center p-4">
+                  <img
+                    src={car.image}
+                    alt={car.name}
+                    className="w-full h-auto object-contain max-h-[170px] drop-shadow-md group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3 bg-orange-50 text-orange-700 border border-orange-200 font-display font-bold text-[10px] uppercase px-2.5 py-1 rounded-full shadow-sm">
+                    {car.category}
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Fuel className="w-4 h-4 text-[#dc2626]" />
-                    <span>Mesin Irit & Halus</span>
+                  <div className="absolute top-3 right-3 bg-emerald-50 text-emerald-800 border border-emerald-200 font-display font-extrabold text-[10px] uppercase px-2.5 py-1 rounded-full shadow-sm">
+                    DP Min. Rp 50rb
                   </div>
-                  <div className="flex items-center gap-1">
-                    <ShieldCheck className="w-4 h-4 text-[#dc2626]" />
-                    <span>Steril & Harum</span>
+                  <div className="absolute bottom-3 right-3 bg-white/95 text-slate-700 font-sans text-[10px] font-bold px-2.5 py-1 rounded-full border border-slate-200 flex items-center gap-1.5 shadow-sm">
+                    <Users className="w-3.5 h-3.5 text-orange-600" />
+                    <span>{car.seats} Kursi</span>
                   </div>
                 </div>
-              </div>
 
-              {/* Details Column */}
-              <div className="lg:col-span-6 p-6 sm:p-8 flex flex-col justify-between space-y-6 text-left">
+                {/* Car Name & Sub-description */}
                 <div>
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#dc2626] bg-red-50 px-2.5 py-1 rounded-md">
-                        Pilihan Keluarga No. 1
-                      </span>
-                      <h3 className="font-display font-extrabold text-2xl text-gray-900 mt-2">
-                        {car.name}
-                      </h3>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-[11px] text-gray-400 font-bold uppercase">Harga Sewa</div>
-                      <div className="font-display font-black text-lg text-[#dc2626]">
-                        Mulai 150 Ribu-an
-                      </div>
-                    </div>
-                  </div>
-
-                  <p className="font-sans text-xs sm:text-sm text-gray-600 leading-relaxed mt-3">
+                  <h3 className="font-display font-black text-2xl text-[#0f172a] group-hover:text-orange-600 transition-colors uppercase tracking-tight">
+                    {car.name}
+                  </h3>
+                  <p className="font-sans text-xs text-slate-600 leading-relaxed mt-1 font-medium">
                     {car.description}
                   </p>
+                </div>
 
-                  <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
-                    <div className="font-sans font-bold text-xs text-gray-800 uppercase">Fasilitas Utama:</div>
-                    <div className="grid grid-cols-2 gap-2 text-xs">
-                      {car.specifications.map((spec, idx) => (
-                        <div key={idx} className="flex items-center gap-2 bg-white p-2 rounded-lg border border-gray-100">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                          <div>
-                            <span className="text-gray-400 font-medium block text-[10px]">{spec.label}</span>
-                            <span className="font-bold text-gray-800">{spec.value}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                {/* COMPLETE FACILITIES CHECKLIST */}
+                <div className="space-y-2 pt-2 border-t border-slate-100">
+                  <span className="text-[10px] font-extrabold tracking-wider uppercase text-orange-600 block">Fasilitas Lengkap:</span>
+                  <div className="space-y-1.5">
+                    {car.includeList.map((facility, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span className="line-clamp-1">{facility}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                {/* Actions */}
-                <div className="pt-4 border-t border-gray-200 flex flex-col sm:flex-row items-center gap-3">
-                  <button
-                    onClick={() => handleWhatsAppDirect(car.name)}
-                    className="w-full bg-[#dc2626] hover:bg-[#b91c1c] text-white font-sans font-bold text-xs uppercase py-3.5 px-5 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <MessageCircle className="w-4.5 h-4.5 fill-current" />
-                    <span>Pesan via WhatsApp</span>
-                  </button>
-
-                  <button
-                    onClick={() => onSelectCar(car)}
-                    className="w-full sm:w-auto bg-gray-900 hover:bg-black text-white font-sans font-bold text-xs uppercase py-3.5 px-5 rounded-xl transition-all cursor-pointer whitespace-nowrap"
-                  >
-                    Form Pemesanan
-                  </button>
-                </div>
-
               </div>
+
+              {/* Action Buttons */}
+              <div className="pt-5 mt-5 border-t border-slate-100 flex items-center gap-2">
+                <button
+                  onClick={() => handleWhatsAppBooking(car.name)}
+                  className="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-sans font-bold text-xs uppercase py-3 px-3 rounded-xl shadow-md shadow-orange-500/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+                  <span>Pesan WA</span>
+                </button>
+
+                <button
+                  onClick={() => onSelectCar(car)}
+                  className="bg-slate-100 hover:bg-slate-200 text-[#0f172a] border border-slate-200 font-sans font-bold text-xs uppercase py-3 px-3 rounded-xl transition-all cursor-pointer"
+                  title="Form Reservasi Lengkap"
+                >
+                  Reservasi
+                </button>
+              </div>
+
             </motion.div>
           ))}
         </div>
