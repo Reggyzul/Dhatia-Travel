@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import Advantages from './components/Advantages';
 import About from './components/About';
 import CarList from './components/CarList';
 import Services from './components/Services';
-import ToursList from './components/ToursList';
 import BookingSteps from './components/BookingSteps';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
 import { Car } from './types';
 import { CARS } from './data/cars';
-import { ChevronUp, MessageSquareCode } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { TRANSLATIONS } from './utils/translations';
 
@@ -24,20 +24,17 @@ export default function App() {
   
   const t = TRANSLATIONS[lang];
 
-  // Monitor scrolling to highlight appropriate header nav item & show scroll-to-top button
   useEffect(() => {
     const handleScroll = () => {
-      // Show/hide scroll to top
       if (window.scrollY > 400) {
         setShowScrollTop(true);
       } else {
         setShowScrollTop(false);
       }
 
-      // Track active section on home page
       if (currentPage === 'home') {
-        const sections = ['home', 'cars', 'services', 'steps', 'contact'];
-        const scrollPosition = window.scrollY + 250; // Offset
+        const sections = ['home', 'services', 'cars', 'advantages', 'steps', 'contact'];
+        const scrollPosition = window.scrollY + 250;
 
         for (const section of sections) {
           const el = document.getElementById(section);
@@ -66,14 +63,6 @@ export default function App() {
       setCurrentPage('about');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setActiveSection('about');
-    } else if (sectionId === 'tours') {
-      setCurrentPage('tours');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setActiveSection('tours');
-    } else if (sectionId === 'rentals') {
-      setCurrentPage('rentals');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setActiveSection('rentals');
     } else {
       if (currentPage !== 'home') {
         setCurrentPage('home');
@@ -99,20 +88,17 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // WhatsApp template for fast-chat floater
   const handleFastWhatsApp = () => {
-    const waNumber = '6281236313554';
+    const waNumber = '6281264008000';
     const text = encodeURIComponent(
-      lang === 'EN' 
-        ? 'Hello Rajawali Trans, I would like to book a travel ticket/charter for Kefa - Kupang. Thank you!'
-        : 'Halo Rajawali Trans, saya ingin memesan tiket travel/carter rute Kefa - Kupang. Terima kasih!'
+      'Halo Dhatia Travel, saya berminat pesan tiket travel / sewa mobil rute Kalimantan Timur. Mohon bantuan reservasi. Terima kasih!'
     );
-    window.open(`https://api.whatsapp.com/send?phone=${waNumber}&text=${text}`, '_blank', 'noreferrer');
+    window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank', 'noreferrer');
   };
 
   return (
     <div 
-      className="relative min-h-screen bg-[#f8fafc] text-gray-800 selection:bg-orange-500 selection:text-white font-sans" 
+      className="relative min-h-screen bg-white text-slate-800 selection:bg-red-600 selection:text-white font-sans" 
       id="main-app-container"
     >
       
@@ -132,41 +118,28 @@ export default function App() {
         
         {currentPage === 'home' ? (
           <>
-            {/* 1. Hero Section Banner */}
-            <Hero onRentClick={() => handleNavClick('rentals')} onVisiMisiClick={() => handleNavClick('about')} lang={lang} />
+            {/* 1. Hero Banner matching screenshot */}
+            <Hero onRentClick={() => handleNavClick('cars')} onVisiMisiClick={() => handleNavClick('about')} lang={lang} />
 
-            {/* 2. Armada Mobil Tampil Berjejer */}
-            <CarList onSelectCar={handleSelectCar} lang={lang} />
-
-            {/* 3. Section: Rute & Tarif (Kefa - Kupang PP & Carter) */}
+            {/* 2. Rute Travel */}
             <Services lang={lang} />
 
-            {/* 4. Section: Cara Pemesanan Mudah */}
+            {/* 3. Armada Kendaraan */}
+            <CarList onSelectCar={handleSelectCar} lang={lang} />
+
+            {/* 4. Keunggulan (Why Choose Us) */}
+            <Advantages onBookClick={() => handleNavClick('cars')} lang={lang} />
+
+            {/* 5. Cara Pemesanan Mudah */}
             <BookingSteps lang={lang} />
 
-            {/* 5. Testimonials */}
+            {/* 6. Testimonials */}
             <Testimonials lang={lang} />
           </>
-        ) : currentPage === 'about' ? (
-          <div className="pt-20 sm:pt-24">
-            {/* Dedicated Standalone Profil & Sejarah Page */}
-            <About lang={lang} />
-            
-            {/* Testimonials */}
-            <Testimonials lang={lang} />
-          </div>
-        ) : currentPage === 'tours' ? (
-          <div className="pt-20 sm:pt-24">
-            {/* Tours View */}
-            <ToursList lang={lang} />
-            
-            {/* Testimonials */}
-            <Testimonials lang={lang} />
-          </div>
         ) : (
           <div className="pt-20 sm:pt-24">
-            {/* Rentals View */}
-            <CarList onSelectCar={handleSelectCar} lang={lang} />
+            {/* Dedicated Profil & Visi Misi Page */}
+            <About lang={lang} />
             
             {/* Testimonials */}
             <Testimonials lang={lang} />
@@ -181,18 +154,19 @@ export default function App() {
       {/* Interactive Booking Popup */}
       <BookingModal car={selectedCar} onClose={() => setSelectedCar(null)} lang={lang} onCarChange={setSelectedCar} />
 
-      {/* Floating Action Buttons */}
+      {/* Floating WhatsApp Action Button - Matching Screenshot Bottom Right */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
-        {/* WhatsApp Fast Button */}
         <motion.button
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           onClick={handleFastWhatsApp}
           className="w-14 h-14 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-full shadow-2xl flex items-center justify-center cursor-pointer hover:scale-110 transition-all border-2 border-white"
-          title="Chat WhatsApp Admin 081236313554"
+          title="Chat WhatsApp Admin Dhatia Travel (081264008000)"
           id="floater-wa"
         >
-          <MessageSquareCode className="w-7 h-7" />
+          <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+          </svg>
         </motion.button>
 
         {/* Scroll To Top */}
@@ -203,7 +177,7 @@ export default function App() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
               onClick={scrollToTop}
-              className="w-12 h-12 bg-[#0f172a] hover:bg-slate-800 text-white rounded-full shadow-xl flex items-center justify-center cursor-pointer transition-all border border-slate-700"
+              className="w-12 h-12 bg-slate-900 hover:bg-slate-800 text-white rounded-full shadow-xl flex items-center justify-center cursor-pointer transition-all border border-slate-700"
               title="Kembali ke Atas"
               id="floater-scroll-top"
             >
