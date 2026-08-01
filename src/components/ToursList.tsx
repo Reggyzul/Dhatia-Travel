@@ -21,38 +21,38 @@ export default function ToursList({ lang }: ToursListProps) {
         ? 'Best private family trip package covering Mount Bromo sunrise, Batu attractions, and Malang city highlights.'
         : 'Paket trip keluarga terbaik meliputi sunrise Gunung Bromo, objek wisata Batu, dan ikon Kota Malang.',
       image: '/tours_bromo.jpg',
-      waMessage: 'Halo Yoga Transport, saya tertarik memesan paket wisata 3D2N Malang Batu Bromo. Mohon info detailnya.'
+      waMessage: 'Halo Dhatia Travel, saya tertarik memesan paket wisata Kaltim. Mohon info detailnya.'
     },
     {
       id: 'tour-city',
-      title: lang === 'EN' ? 'City Tour Malang & Batu' : 'City Tour Malang & Batu',
+      title: lang === 'EN' ? 'City Tour Samarinda & Tenggarong' : 'City Tour Samarinda & Tenggarong',
       duration: lang === 'EN' ? '1 Day Tour' : '1 Hari Penuh (1 Day)',
-      waMessage: 'Halo Rajawali Trans, saya tertarik memesan paket wisata Kupang & Timor. Mohon info detailnya.'
+      waMessage: 'Halo Dhatia Travel, saya tertarik memesan paket wisata Samarinda & Tenggarong. Mohon info detailnya.'
     },
     {
       id: 'tour-2',
-      title: 'City Tour Kupang',
-      subtitle: 'Pantai Lasiana, Gua Kristal, & Pusat Kuliner',
+      title: 'City Tour Balikpapan',
+      subtitle: 'Pantai Manggar, Kebun Raya, & Pusat Kuliner',
       price: 'Mulai 700rb-an',
       duration: '1 Hari Full (Flexible)',
       image: 'https://images.unsplash.com/photo-1506015391300-4802dc74de2e?auto=format&fit=crop&q=80&w=600',
-      highlights: ['Pantai Lasiana', 'Gua Kristal', 'Pusat Souvenir Tenun', 'Kuliner Ikan Bakar'],
-      waMessage: 'Halo Rajawali Trans, saya tertarik memesan paket City Tour Kupang. Mohon info ketersediaannya.'
+      highlights: ['Pantai Manggar', 'Kebun Raya Balikpapan', 'Pusat Souvenir', 'Kuliner Seafood'],
+      waMessage: 'Halo Dhatia Travel, saya tertarik memesan paket City Tour Balikpapan. Mohon info ketersediaannya.'
     },
     {
       id: 'tour-3',
-      title: 'Shuttle & Drop Bandara El Tari',
-      subtitle: 'Antar Jemput Bandara & Pelabuhan Tenau',
+      title: 'Shuttle & Drop Bandara SAMS Sepinggan',
+      subtitle: 'Antar Jemput Bandara & Pelabuhan Semayang',
       price: 'Mulai 250rb-an',
       duration: 'Sesuai Jam Penerbangan',
       image: 'https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&q=80&w=600',
       highlights: ['Tepat Waktu', 'Bantu Angkat Bagasi', 'Driver Ramah', 'Armada AC Steril'],
-      waMessage: 'Halo Rajawali Trans, saya ingin memesan layanan Drop Bandara El Tari Kupang. Mohon konfirmasi tarifnya.'
+      waMessage: 'Halo Dhatia Travel, saya ingin memesan layanan Drop Bandara SAMS Sepinggan. Mohon konfirmasi tarifnya.'
     }
   ];
 
   const handleWhatsApp = (msg: string) => {
-    const waNumber = '628813305066';
+    const waNumber = '6281264008000';
     window.open(`https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(msg)}`, '_blank', 'noreferrer');
   };
 
