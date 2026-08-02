@@ -76,7 +76,7 @@ export default function Footer({ onNavClick, lang }: FooterProps) {
 
               <div className="flex items-center gap-2.5">
                 <Facebook className="w-4.5 h-4.5 text-teal-400 shrink-0" />
-                <span>Facebook Resmi: <a href="https://facebook.com" target="_blank" rel="noreferrer" className="text-teal-400 font-bold hover:underline">Bindo Pratama</a></span>
+                <span>Facebook Resmi: <a href="https://web.facebook.com/bindo.pratama.94" target="_blank" rel="noreferrer" className="text-teal-400 font-bold hover:underline">Bindo Pratama</a></span>
               </div>
 
               <p className="pt-2 text-slate-500 text-[11px]">©2026 Dhatia Travel Kalimantan Timur. Semua Hak Dilindungi.</p>
@@ -135,15 +135,20 @@ export default function Footer({ onNavClick, lang }: FooterProps) {
               </div>
             </div>
 
-            <div className="bg-slate-800/90 p-4 rounded-2xl border border-slate-700 space-y-1">
+            <a 
+              href="https://web.facebook.com/bindo.pratama.94" 
+              target="_blank" 
+              rel="noreferrer"
+              className="bg-slate-800/90 hover:bg-slate-800 p-4 rounded-2xl border border-slate-700 space-y-1 block transition-colors group cursor-pointer"
+            >
               <div className="flex items-center gap-2 text-teal-400 font-bold text-xs uppercase">
-                <Facebook className="w-4 h-4 shrink-0" />
+                <Facebook className="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform" />
                 <span>Facebook Official</span>
               </div>
               <p className="text-xs text-slate-300 font-medium">
-                Akun Facebook: <strong className="text-white">Bindo Pratama</strong>
+                Akun Facebook: <strong className="text-white group-hover:text-teal-300 transition-colors">Bindo Pratama</strong>
               </p>
-            </div>
+            </a>
 
             {/* Embedded Google Map Kutai Kartanegara / Loa Janan */}
             <div className="pt-2">
