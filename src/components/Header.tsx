@@ -74,18 +74,17 @@ export default function Header({ activeSection, onNavClick, lang, setLang, curre
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-12 sm:h-14">
             
-            {/* 1. BRAND TEXT LOGO ONLY (NO IMAGE LOGO) */}
+            {/* 1. BRAND IMAGE LOGO */}
             <div 
               onClick={() => handleItemClick({ label: t.nav_home, id: 'home', type: 'page', pageId: 'home' })}
-              className="flex flex-col cursor-pointer group shrink-0 text-left"
+              className="flex items-center cursor-pointer group shrink-0"
               id="header-logo"
             >
-              <span className="font-display font-black text-xl sm:text-2xl tracking-tight text-slate-900 leading-none uppercase group-hover:text-red-600 transition-colors">
-                DHATIA <span className="text-red-600">TRAVEL</span>
-              </span>
-              <span className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mt-0.5">
-                Menemani Sepenuh Hati
-              </span>
+              <img 
+                src="/logo-dhatia.png" 
+                alt="DHATIA Tour Travel Logo" 
+                className="h-12 sm:h-14 w-auto object-contain transition-transform group-hover:scale-105"
+              />
             </div>
 
             {/* 2. DESKTOP NAV ITEMS */}

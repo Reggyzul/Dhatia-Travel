@@ -46,13 +46,14 @@ export default function Footer({ onNavClick, lang }: FooterProps) {
           
           {/* Column 1: Brand & Office Address */}
           <div className="md:col-span-5 space-y-6">
-            <div className="flex flex-col">
-              <span className="font-display font-black text-2xl tracking-tight text-white uppercase leading-none">
-                DHATIA <span className="text-amber-400">TRAVEL</span>
-              </span>
-              <span className="text-[10px] font-extrabold text-teal-400 tracking-wider uppercase mt-1">
-                Menemani Sepenuh Hati • Kalimantan Timur
-              </span>
+            <div className="flex items-center gap-3">
+              <div className="bg-white px-3 py-1.5 rounded-2xl shadow-md border border-slate-700/80 inline-block">
+                <img 
+                  src="/logo-dhatia.png" 
+                  alt="DHATIA Tour Travel Logo" 
+                  className="h-12 w-auto object-contain"
+                />
+              </div>
             </div>
 
             <p className="font-sans text-xs text-slate-400 leading-relaxed max-w-sm font-medium">
