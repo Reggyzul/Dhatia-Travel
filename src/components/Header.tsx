@@ -67,23 +67,23 @@ export default function Header({ activeSection, onNavClick, lang, setLang, curre
       <div
         className={`w-full transition-all duration-300 ${
           isScrolled
-            ? 'bg-white/95 backdrop-blur-md py-3 shadow-md border-b border-slate-100 text-slate-800'
-            : 'bg-white py-4 border-b border-slate-100 text-slate-800'
+            ? 'bg-white/95 backdrop-blur-md py-2 sm:py-3 shadow-md border-b border-slate-100 text-slate-800'
+            : 'bg-white py-3 sm:py-4 border-b border-slate-100 text-slate-800'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-12 sm:h-14">
+          <div className="flex items-center justify-between h-16 sm:h-20">
             
             {/* 1. BRAND IMAGE LOGO */}
             <div 
               onClick={() => handleItemClick({ label: t.nav_home, id: 'home', type: 'page', pageId: 'home' })}
-              className="flex items-center cursor-pointer group shrink-0"
+              className="flex items-center cursor-pointer group shrink-0 py-1"
               id="header-logo"
             >
               <img 
                 src="/logo-dhatia.png" 
                 alt="DHATIA Tour Travel Logo" 
-                className="h-12 sm:h-14 w-auto object-contain transition-transform group-hover:scale-105"
+                className="h-14 sm:h-16 lg:h-20 w-auto object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-sm"
               />
             </div>
 

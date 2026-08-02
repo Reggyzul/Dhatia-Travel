@@ -47,11 +47,11 @@ export default function Footer({ onNavClick, lang }: FooterProps) {
           {/* Column 1: Brand & Office Address */}
           <div className="md:col-span-5 space-y-6">
             <div className="flex items-center gap-3">
-              <div className="bg-white px-3 py-1.5 rounded-2xl shadow-md border border-slate-700/80 inline-block">
+              <div className="bg-white p-3.5 sm:p-4 rounded-2xl shadow-xl border border-white/20 inline-block group hover:scale-105 transition-transform duration-300">
                 <img 
                   src="/logo-dhatia.png" 
                   alt="DHATIA Tour Travel Logo" 
-                  className="h-12 w-auto object-contain"
+                  className="h-16 sm:h-20 w-auto object-contain"
                 />
               </div>
             </div>
